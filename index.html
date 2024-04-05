@@ -75,6 +75,7 @@
                 let R = imageData.data[0];
                 let G = imageData.data[1];     
                 let B = imageData.data[2];
+                
 
                 ctx = document.getElementById("canvas3").getContext("2d");
                 ctx.fillStyle =`rgb(${R},${G},${B})`;
@@ -125,11 +126,13 @@
                 let R = imageData.data[0];
                 let G = imageData.data[1];     
                 let B = imageData.data[2];
+                let A = imageData.data[3];
 
                 ctx = document.getElementById("canvas3").getContext("2d");
                 ctx.fillStyle =`rgb(${R},${G},${B})`;
 
                 ctx.fillRect(i*10,j*10,10,10);
+                console.log(R,G,B,A);
 
             }
         }
