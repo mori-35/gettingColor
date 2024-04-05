@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body onload ="Init()">
+    a
     <input onclick="Start()" type="button" value="Start">
     <input onclick="MaxStart()" type="button" value="MaxStart">
     <input onclick="Start2()" type="button" value="Start2">
@@ -131,9 +132,9 @@
                 ctx = document.getElementById("canvas1").getContext("2d");
                 let imageData = ctx.getImageData(iS + i,jS + j,1,1);
 
-                let R = Math.floor(255*Math.pow((imageData[0]/255)*(1/g)));
-                let G = Math.floor(255*Math.pow((imageData[1]/255)*(1/g)));  
-                let B = Math.floor(255*Math.pow((imageData[2]/255)*(1/g)));
+                let R = Math.floor(255*Math.pow((imageData[0]/255),(1/g)));
+                let G = Math.floor(255*Math.pow((imageData[1]/255),(1/g)));  
+                let B = Math.floor(255*Math.pow((imageData[2]/255),(1/g)));
 
                 ctx = document.getElementById("canvas3").getContext("2d");
                 ctx.fillStyle =`rgb(${R},${G},${B})`;
