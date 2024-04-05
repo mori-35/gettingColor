@@ -8,9 +8,10 @@
 <body onload ="Init()">
     <input onclick="Start()" type="button" value="Start">
     <input onclick="MaxStart()" type="button" value="MaxStart">
-    <canvas id="canvas1" width="2000" height="2000"></canvas>
+    <input onclick="Start2()" type="button" value="Start2">
+    <canvas id="canvas1" width="400" height="400"></canvas>
     <canvas id="canvas2" width="200" height="200"></canvas>
-    <canvas id="canvas3" width="5000" height="5000"></canvas>
+    <canvas id="canvas3" width="2000" height="2000"></canvas>
     <img id="image1" src="./aTest2.jpg" style="display: none;">
 </body>
 
@@ -22,7 +23,7 @@
     {
         ctx = document.getElementById("canvas1").getContext("2d");
         image = document.getElementById("image1");
-        ctx.drawImage(image,0,0,image.width,image.height);
+      //  ctx.drawImage(image,0,0,image.width,image.height);
 
     }
 
@@ -82,9 +83,29 @@
         }
     }
 
-    function Draw()
+    function Start2()
     {
+        image = document.getElementById("image1");
+        ctx = document.getElementById("canvas1").getContext("2d");
+        ctx.drawImage(image,0,0,400,400);
 
+        for(let i = 0; i< 400; i ++) {
+            for(let j = 0; j< 400; j ++) {
+
+                ctx = document.getElementById("canvas1").getContext("2d");
+                let imageData = ctx.getImageData(i,j,1,1);
+
+                let R = imageData.data[0];
+                let G = imageData.data[1];     
+                let B = imageData.data[2];
+
+                ctx = document.getElementById("canvas3").getContext("2d");
+                ctx.fillStyle =`rgb(${R},${G},${B})`;
+
+                ctx.fillRect(i*3,j*3,3,3);
+
+            }
+        }
     }
 </script>
 </html>
