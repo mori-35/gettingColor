@@ -9,9 +9,11 @@
     <input onclick="Start()" type="button" value="Start">
     <input onclick="MaxStart()" type="button" value="MaxStart">
     <input onclick="Start2()" type="button" value="Start2">
+        <input onclick="Start3()" type="button" value="Start3">
+        <input onclick="Start4()" type="button" value="Start4">
     <canvas id="canvas1" width="400" height="400"></canvas>
     <canvas id="canvas2" width="200" height="200"></canvas>
-    <canvas id="canvas3" width="2000" height="2000"></canvas>
+    <canvas id="canvas3" width="4000" height="4000"></canvas>
     <img id="image1" src="./aTest2.jpg" style="display: none;">
 </body>
 
@@ -103,6 +105,56 @@
                 ctx.fillStyle =`rgb(${R},${G},${B})`;
 
                 ctx.fillRect(i*3,j*3,3,3);
+
+            }
+        }
+    }
+
+        function Start3()
+    {
+        image = document.getElementById("image1");
+        ctx = document.getElementById("canvas1").getContext("2d");
+        ctx.drawImage(image,0,0,400,400);
+
+        for(let i = 0; i< 400; i ++) {
+            for(let j = 0; j< 400; j ++) {
+
+                ctx = document.getElementById("canvas1").getContext("2d");
+                let imageData = ctx.getImageData(i,j,1,1);
+
+                let R = imageData.data[0];
+                let G = imageData.data[1];     
+                let B = imageData.data[2];
+
+                ctx = document.getElementById("canvas3").getContext("2d");
+                ctx.fillStyle =`rgb(${R},${G},${B})`;
+
+                ctx.fillRect(i*10,j*10,10,10);
+
+            }
+        }
+    }
+
+        function Start4()
+    {
+        image = document.getElementById("image1");
+        ctx = document.getElementById("canvas1").getContext("2d");
+        ctx.drawImage(image,0,0,400,400);
+
+        for(let i = 0; i< 800; i += 0.5) {
+            for(let j = 0; j< 800; j +=0.5) {
+
+                ctx = document.getElementById("canvas1").getContext("2d");
+                let imageData = ctx.getImageData(i,j,0.5,0.5);
+
+                let R = imageData.data[0];
+                let G = imageData.data[1];     
+                let B = imageData.data[2];
+
+                ctx = document.getElementById("canvas3").getContext("2d");
+                ctx.fillStyle =`rgb(${R},${G},${B})`;
+
+                ctx.fillRect(i*5,j*5,2.5,2.5);
 
             }
         }
