@@ -6,12 +6,12 @@
     <title>Document</title>
 </head>
 <body onload ="Init()">
-    <canvas id="canvas1" width="10000" height="10000"></canvas>
-    <canvas id="canvas2" width="200" height="200"></canvas>
-    <canvas id="canvas3" width="10000" height="10000"></canvas>
     <input onclick="Start()" type="button" value="Start">
     <input onclick="MaxStart()" type="button" value="MaxStart">
-    <img id="image1" src="./aTest.jpg" style="display: none;">
+    <canvas id="canvas1" width="2000" height="2000"></canvas>
+    <canvas id="canvas2" width="200" height="200"></canvas>
+    <canvas id="canvas3" width="5000" height="5000"></canvas>
+    <img id="image1" src="./aTest2.jpg" style="display: none;">
 </body>
 
 <script>
@@ -22,10 +22,8 @@
     {
         ctx = document.getElementById("canvas1").getContext("2d");
         image = document.getElementById("image1");
-        ctx.drawImage(image,0,0,200,200);
+        ctx.drawImage(image,0,0,image.width,image.height);
 
-        let colorData = ctx.getImageData(100,100,1,1);
-        console.log(colorData);
     }
 
     function Start()
@@ -59,6 +57,7 @@
     {
         let di = prompt("di?");
         let dj = prompt("dj?");
+        let br = prompt("br?");
 
         image = document.getElementById("image1");
         ctx = document.getElementById("canvas1").getContext("2d");
@@ -76,10 +75,16 @@
 
                 ctx = document.getElementById("canvas3").getContext("2d");
                 ctx.fillStyle =`rgb(${R},${G},${B})`;
-                ctx.fillRect(i,j,di,dj);
+
+                ctx.fillRect(i*br,j*br,di*br,dj*br);
 
             }
         }
+    }
+
+    function Draw()
+    {
+
     }
 </script>
 </html>
