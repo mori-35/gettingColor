@@ -21,7 +21,10 @@
         ctx.drawImage(image,0,0,200,200);
 
         let colorData = ctx.getImageData(100,100,1,1);
-        console.log(colorData);
+        let R = colorData.data[0];
+        let G = colorData.data[1];
+        let B = colorData.data[2];
+        console.log(R,G,B);
     }
 </script>
 </html>
