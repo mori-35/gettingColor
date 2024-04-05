@@ -12,7 +12,7 @@
     <input onclick="Start111()" type="button" value="Start111">
     <canvas id="canvas1" width="2000" height="2000"></canvas>
     <canvas id="canvas2" width="200" height="200"></canvas>
-    <canvas id="canvas3" width="2000" height="2000"></canvas>
+    <canvas id="canvas3" width="3000" height="3000"></canvas>
     <img id="image1" src="./test3.jpg" style="display: none;">
 </body>
 
@@ -122,7 +122,7 @@
 
         image = document.getElementById("image1");
         ctx = document.getElementById("canvas1").getContext("2d");
-        ctx.drawImage(image,0,0,400,400);
+        ctx.drawImage(image,0,0,image.width,image.height);
 
         for(let i = 0; i< iE-iS; i ++) {
             for(let j = 0; j< jE-jS; j ++) {
@@ -137,7 +137,7 @@
                 ctx = document.getElementById("canvas3").getContext("2d");
                 ctx.fillStyle =`rgb(${R},${G},${B})`;
 
-                ctx.fillRect(i*3,j*3,3,3);
+                ctx.fillRect(i*5,j*5,5,5);
 
             }
         }
