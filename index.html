@@ -11,7 +11,7 @@
     <canvas id="canvas3" width="10000" height="10000"></canvas>
     <input onclick="Start()" type="button" value="Start">
     <input onclick="MaxStart()" type="button" value="MaxStart">
-    <img id="image1" src="./redTest.png" style="display: none;">
+    <img id="image1" src="./aTest.jpg" style="display: none;">
 </body>
 
 <script>
@@ -57,7 +57,29 @@
 
     function MaxStart() 
     {
-        
+        let di = prompt("di?");
+        let dj = prompt("dj?");
+
+        image = document.getElementById("image1");
+        ctx = document.getElementById("canvas1").getContext("2d");
+        ctx.drawImage(image,0,0,image.width,image.height);
+
+        for(let i = 0; i< image.width; i += di) {
+            for(let j = 0; j< image.height; j += dj) {
+
+                ctx = document.getElementById("canvas1").getContext("2d");
+                let imageData = ctx.getImageData(i,j,di,dj);
+
+                let R = imageData.data[0];
+                let G = imageData.data[1];     
+                let B = imageData.data[2];
+
+                ctx = document.getElementById("canvas3").getContext("2d");
+                ctx.fillStyle =`rgb(${R},${G},${B})`;
+                ctx.fillRect(i,j,di,dj);
+
+            }
+        }
     }
 </script>
 </html>
