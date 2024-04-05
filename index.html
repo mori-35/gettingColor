@@ -118,6 +118,7 @@
         let jS = parseInt(prompt("iS"));
         let iE = parseInt(prompt("iS"));
         let jE = parseInt(prompt("iS"));
+        let g = parseInt(prompt("gamma"));
 
 
         image = document.getElementById("image1");
@@ -130,9 +131,9 @@
                 ctx = document.getElementById("canvas1").getContext("2d");
                 let imageData = ctx.getImageData(iS + i,jS + j,1,1);
 
-                let R = imageData.data[0];
-                let G = imageData.data[1];     
-                let B = imageData.data[2];
+                let R = Math.floor(255*Math.pow((imageData[0]/255)*(1/g)));
+                let G = Math.floor(255*Math.pow((imageData[1]/255)*(1/g)));  
+                let B = Math.floor(255*Math.pow((imageData[2]/255)*(1/g)));
 
                 ctx = document.getElementById("canvas3").getContext("2d");
                 ctx.fillStyle =`rgb(${R},${G},${B})`;
