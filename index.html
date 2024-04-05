@@ -7,11 +7,15 @@
 </head>
 <body onload ="Init()">
     <canvas id="canvas1" width="200" height="200"></canvas>
+    <canvas id="canvas2" width="200" height="200"></canvas>
+    <canvas id="canvas3" width="10000" height="10000"></canvas>
+    <input onclick="Start()" type="button" value="Start">
+    <input onclick="MaxStart()" type="button" value="MaxStart">
     <img id="image1" src="./redTest.png" style="display: none;">
 </body>
 
 <script>
-    let ctx; 
+    let ctx;
     let image;
 
     function Init() 
@@ -21,10 +25,39 @@
         ctx.drawImage(image,0,0,200,200);
 
         let colorData = ctx.getImageData(100,100,1,1);
-        let R = colorData.data[0];
-        let G = colorData.data[1];
-        let B = colorData.data[2];
-        console.log(R,G,B);
+        console.log(colorData);
+    }
+
+    function Start()
+    {
+        let iMax = 200;
+        let jMax = 200;
+
+        image = document.getElementById("image1");
+        ctx = document.getElementById("canvas1").getContext("2d");
+        ctx.drawImage(image,0,0,200,200);
+
+        for(let i = 0; i< iMax; i ++) {
+            for(let j = 0; j< jMax; j++) {
+
+                ctx = document.getElementById("canvas1").getContext("2d");
+                let imageData = ctx.getImageData(i,j,1,1);
+
+                let R = imageData.data[0];
+                let G = imageData.data[1];     
+                let B = imageData.data[2];
+
+                ctx = document.getElementById("canvas2").getContext("2d");
+                ctx.fillStyle =`rgb(${R},${G},${B})`;
+                ctx.fillRect(i,j,1,1);
+
+            }
+        }
+    }
+
+    function MaxStart() 
+    {
+        
     }
 </script>
 </html>
