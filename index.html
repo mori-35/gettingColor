@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body onload ="Init()">
+    <canvas id="canvas1" width="200" height="200"></canvas>
+    <img id="image1" src="./redTest.png" style="display: none;">
+</body>
+
+<script>
+    let ctx;
+    let image;
+
+    function Init() 
+    {
+        ctx = document.getElementById("canvas1").getContext("2d");
+        image = document.getElementById("image1");
+        ctx.drawImage(image,0,0,200,200);
+
+        let colorData = ctx.getImageData(100,100,1,1);
+        console.log(colorData);
+    }
+</script>
+</html>
