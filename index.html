@@ -1,148 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body onload ="Init()">
-    a
-    <input onclick="Start()" type="button" value="Start">
-    <input onclick="MaxStart()" type="button" value="MaxStart">
-    <input onclick="Start2()" type="button" value="Start2">
-    <input onclick="Start111()" type="button" value="Start111">
-    <canvas id="canvas1" width="2000" height="2000"></canvas>
-    <canvas id="canvas2" width="200" height="200"></canvas>
-    <canvas id="canvas3" width="3000" height="3000"></canvas>
-    <img id="image1" src="./test3.jpg" style="display: none;">
-</body>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Promira_6</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+  </head>
+  <body>
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
+      <div id="unity-loading-bar">
+        <div id="unity-logo"></div>
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+      </div>
+      <div id="unity-warning"> </div>
+      <div id="unity-footer">
+        <div id="unity-webgl-logo"></div>
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">Promira_6</div>
+      </div>
+    </div>
+    <script>
 
-<script>
-    let ctx;
-    let image;
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var warningBanner = document.querySelector("#unity-warning");
 
-    function Init() 
-    {
-        ctx = document.getElementById("canvas1").getContext("2d");
-        image = document.getElementById("image1");
-      //  ctx.drawImage(image,0,0,image.width,image.height);
-        document.getElementById("canvas1").onclick = function(e) {
-            console.log(e.offsetX,e.offsetY);
+      // Shows a temporary message banner/ribbon for a few seconds, or
+      // a permanent error message on top of the canvas if type=='error'.
+      // If type=='warning', a yellow highlight color is used.
+      // Modify or remove this function to customize the visually presented
+      // way that non-critical warnings and error messages are presented to the
+      // user.
+      function unityShowBanner(msg, type) {
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
         }
-
-    }
-
-    function Start()
-    {
-        let iMax = 200;
-        let jMax = 200;
-
-        image = document.getElementById("image1");
-        ctx = document.getElementById("canvas1").getContext("2d");
-        ctx.drawImage(image,0,0,200,200);
-
-        for(let i = 0; i< iMax; i ++) {
-            for(let j = 0; j< jMax; j++) {
-
-                ctx = document.getElementById("canvas1").getContext("2d");
-                let imageData = ctx.getImageData(i,j,1,1);
-
-                let R = imageData.data[0];
-                let G = imageData.data[1];     
-                let B = imageData.data[2];
-
-                ctx = document.getElementById("canvas2").getContext("2d");
-                ctx.fillStyle =`rgb(${R},${G},${B})`;
-                ctx.fillRect(i,j,1,1);
-
-            }
+        var div = document.createElement('div');
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == 'error') div.style = 'background: red; padding: 10px;';
+        else {
+          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+          setTimeout(function() {
+            warningBanner.removeChild(div);
+            updateBannerVisibility();
+          }, 5000);
         }
-    }
+        updateBannerVisibility();
+      }
 
-    function MaxStart() 
-    {
-        let di = prompt("di?");
-        let dj = prompt("dj?");
-        let br = prompt("br?");
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/Build0710.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/Build0710.data.br",
+        frameworkUrl: buildUrl + "/Build0710.framework.js.br",
+        codeUrl: buildUrl + "/Build0710.wasm.br",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "Promira_6",
+        productVersion: "1.0",
+        showBanner: unityShowBanner,
+      };
 
-        image = document.getElementById("image1");
-        ctx = document.getElementById("canvas1").getContext("2d");
-        ctx.drawImage(image,0,0,image.width,image.height);
+      // By default Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
 
-        for(let i = 0; i< image.width; i += di) {
-            for(let j = 0; j< image.height; j += dj) {
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
 
-                ctx = document.getElementById("canvas1").getContext("2d");
-                let imageData = ctx.getImageData(i,j,di,dj);
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        container.className = "unity-mobile";
+        canvas.className = "unity-mobile";
 
-                let R = imageData.data[0];
-                let G = imageData.data[1];     
-                let B = imageData.data[2];
-
-                ctx = document.getElementById("canvas3").getContext("2d");
-                ctx.fillStyle =`rgb(${R},${G},${B})`;
-
-                ctx.fillRect(i*br,j*br,di*br,dj*br);
-
-            }
-        }
-    }
-
-    function Start2()
-    {
-        image = document.getElementById("image1");
-        ctx = document.getElementById("canvas1").getContext("2d");
-        ctx.drawImage(image,0,0,400,400);
-
-        for(let i = 0; i< 400; i ++) {
-            for(let j = 0; j< 400; j ++) {
-
-                ctx = document.getElementById("canvas1").getContext("2d");
-                let imageData = ctx.getImageData(i,j,1,1);
-
-                let R = imageData.data[0];
-                let G = imageData.data[1];     
-                let B = imageData.data[2];
-
-                ctx = document.getElementById("canvas3").getContext("2d");
-                ctx.fillStyle =`rgb(${R},${G},${B})`;
-
-                ctx.fillRect(i*3,j*3,3,3);
-
-            }
-        }
-    }
-
-    function Start111()
-    {
-        let iS = parseInt(prompt("iS"));
-        let jS = parseInt(prompt("iS"));
-        let iE = parseInt(prompt("iS"));
-        let jE = parseInt(prompt("iS"));
-        let g = parseInt(prompt("gamma"));
+        // To lower canvas resolution on mobile devices to gain some
+        // performance, uncomment the following line:
+        // config.devicePixelRatio = 1;
 
 
-        image = document.getElementById("image1");
-        ctx = document.getElementById("canvas1").getContext("2d");
-        ctx.drawImage(image,0,0,image.width,image.height);
+      } else {
+        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
-        for(let i = 0; i< iE-iS; i ++) {
-            for(let j = 0; j< jE-jS; j ++) {
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
+      }
 
-                ctx = document.getElementById("canvas1").getContext("2d");
-                let imageData = ctx.getImageData(iS + i,jS + j,1,1);
+      loadingBar.style.display = "block";
 
-                let R = Math.floor(255*Math.pow((imageData[0]/255),(1/g)));
-                let G = Math.floor(255*Math.pow((imageData[1]/255),(1/g)));  
-                let B = Math.floor(255*Math.pow((imageData[2]/255),(1/g)));
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+              }).then((unityInstance) => {
+                loadingBar.style.display = "none";
+                fullscreenButton.onclick = () => {
+                  unityInstance.SetFullscreen(1);
+                };
+              }).catch((message) => {
+                alert(message);
+              });
+            };
 
-                ctx = document.getElementById("canvas3").getContext("2d");
-                ctx.fillStyle =`rgb(${R},${G},${B})`;
+      document.body.appendChild(script);
 
-                ctx.fillRect(i*5,j*5,5,5);
-
-            }
-        }
-    }
-</script>
+    </script>
+  </body>
 </html>
